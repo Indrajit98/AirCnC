@@ -1,8 +1,41 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { useContext } from 'react'
+import { toast } from 'react-hot-toast'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import PrimaryButton from '../../Components/Button/PrimaryButton'
+import SmallSpinner from '../../Components/Spinner/SmallSpinner'
+import { AuthContext } from '../../contexts/AuthProvider'
 
 const Login = () => {
+  const {signin,signInWithGoogle, loading, setLoading} = useContext(AuthContext)
+  const navigate = useNavigate()
+  const location = useLocation()
+  const from =  location.state?.from?.pathname || '/'
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+
+    signin(email,password)
+    .then(res => {
+      toast.success('Login Successfully.....')
+      navigate(from,{replace:true})
+      console.log(res)
+    })
+    .catch(err => {
+      toast.error(err.message)
+      setLoading(false)
+    })
+
+    // console.log(name,image,email,password);
+
+    
+      
+    // return console.log(formData);
+  };
+
+
   return (
     <div className='flex justify-center items-center pt-8'>
       <div className='flex flex-col max-w-md p-6 rounded-md sm:p-10 bg-gray-100 text-gray-900'>
@@ -12,7 +45,7 @@ const Login = () => {
             Sign in to access your account
           </p>
         </div>
-        <form
+        <form onSubmit={handleSubmit}
           noValidate=''
           action=''
           className='space-y-6 ng-untouched ng-pristine ng-valid'
@@ -54,7 +87,7 @@ const Login = () => {
               type='submit'
               classes='w-full px-8 py-3 font-semibold rounded-md bg-gray-900 hover:bg-gray-700 hover:text-white text-gray-100'
             >
-              Sign in
+              {loading? <SmallSpinner/> : 'Sign in'}
             </PrimaryButton>
           </div>
         </form>

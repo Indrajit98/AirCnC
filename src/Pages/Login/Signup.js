@@ -1,18 +1,61 @@
 import React from "react";
 import { useContext } from "react";
+import { toast } from "react-hot-toast";
 
 import { Link } from "react-router-dom";
 import PrimaryButton from "../../Components/Button/PrimaryButton";
 import { AuthContext } from "../../contexts/AuthProvider";
 
 const Signup = () => {
+  const { createUser, updateUserProfile, verifyEmail,signInWithGoogle, loading, setLoading } =
+    useContext(AuthContext);
 
-  const {createUser,updateUserProfile,verifyEmail,loading,setLoading} = useContext(AuthContext)
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const name = e.target.name.value;
+    const image = e.target.image.files[0];
+    const email = e.target.email.value;
+    const password = e.target.password.value;
 
-  const handleSubmit = (e) =>{
-    e.preventDefault()
+    // console.log(name,image,email,password);
+
+    const formData = new FormData();
+    formData.append("image", image);
+    const url = `https://api.imgbb.com/1/upload?key=78690ad21c72c2f24158ea85a809feac`;
+
+    fetch(url, {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data.data.display_url);
+        createUser(email, password)
+          .then((res) => {
+            // console.log(res)
+            updateUserProfile(name, data.data.display_url)
+            .then(
+              verifyEmail()
+              .then(()=>{
+                toast.success('Please check your email for verification link')
+              })
+            )
+            .catch((err) => console.log(err));
+          })
+
+          .catch((err) => console.log(err));
+      })
+
+      .catch((err) => console.log(err));
+
+    // return console.log(formData);
+  };
+  const handleGoogleSignIn = () => {
+    signInWithGoogle()
+    .then(result=>{
+      console.log(result.user);
+    })
   }
-
 
   return (
     <div className="flex justify-center items-center pt-8">
@@ -22,6 +65,7 @@ const Signup = () => {
           <p className="text-sm text-gray-400">Create a new account</p>
         </div>
         <form
+          onSubmit={handleSubmit}
           noValidate=""
           action=""
           className="space-y-12 ng-untouched ng-pristine ng-valid"
@@ -35,7 +79,7 @@ const Signup = () => {
                 type="text"
                 name="name"
                 id="name"
-                required
+                // required
                 placeholder="Enter Your Name Here"
                 className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-green-500 bg-gray-200 text-gray-900"
                 data-temp-mail-org="0"
@@ -50,7 +94,7 @@ const Signup = () => {
                 id="image"
                 name="image"
                 accept="image/*"
-                required
+                // required
               />
             </div>
             <div>
@@ -77,7 +121,7 @@ const Signup = () => {
                 type="password"
                 name="password"
                 id="password"
-                required
+                // required
                 placeholder="*******"
                 className="w-full px-3 py-2 border rounded-md border-gray-300 bg-gray-200 focus:outline-green-500 text-gray-900"
               />
@@ -102,7 +146,7 @@ const Signup = () => {
           <div className="flex-1 h-px sm:w-16 dark:bg-gray-700"></div>
         </div>
         <div className="flex justify-center space-x-4">
-          <button aria-label="Log in with Google" className="p-3 rounded-sm">
+          <button onClick={handleGoogleSignIn} aria-label="Log in with Google" className="p-3 rounded-sm">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 32 32"
