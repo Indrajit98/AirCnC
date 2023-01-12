@@ -2,6 +2,7 @@ import React from 'react'
 import { useContext } from 'react'
 import { toast } from 'react-hot-toast'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { setAuthToken } from '../../api/auth'
 import PrimaryButton from '../../Components/Button/PrimaryButton'
 import SmallSpinner from '../../Components/Spinner/SmallSpinner'
 import { AuthContext } from '../../contexts/AuthProvider'
@@ -20,20 +21,26 @@ const Login = () => {
     signin(email,password)
     .then(res => {
       toast.success('Login Successfully.....')
+      setAuthToken(res.user)
+
       navigate(from,{replace:true})
-      console.log(res)
+      // console.log(res)
     })
     .catch(err => {
       toast.error(err.message)
       setLoading(false)
     })
-
-    // console.log(name,image,email,password);
-
-    
-      
-    // return console.log(formData);
   };
+
+  const handleGoogleSignIn = () => {
+    signInWithGoogle()
+    .then(res => {
+      console.log(res.user)
+      setAuthToken(res.user)
+      navigate(from,{replace:true})
+
+    })
+  }
 
 
   return (
@@ -104,7 +111,7 @@ const Login = () => {
           <div className='flex-1 h-px sm:w-16 dark:bg-gray-700'></div>
         </div>
         <div className='flex justify-center space-x-4'>
-          <button aria-label='Log in with Google' className='p-3 rounded-sm'>
+          <button onClick={handleGoogleSignIn} aria-label='Log in with Google' className='p-3 rounded-sm'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
               viewBox='0 0 32 32'

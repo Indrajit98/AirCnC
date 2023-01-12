@@ -2,13 +2,17 @@ import React from "react";
 import { useContext } from "react";
 import { toast } from "react-hot-toast";
 
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { setAuthToken } from "../../api/auth";
 import PrimaryButton from "../../Components/Button/PrimaryButton";
+import SmallSpinner from "../../Components/Spinner/SmallSpinner";
 import { AuthContext } from "../../contexts/AuthProvider";
 
 const Signup = () => {
-  const { createUser, updateUserProfile, verifyEmail,signInWithGoogle, loading, setLoading } =
-    useContext(AuthContext);
+  const { createUser, updateUserProfile, verifyEmail,signInWithGoogle, loading, setLoading } = useContext(AuthContext);
+  const navigate = useNavigate()
+  const location = useLocation()
+  const from =  location.state?.from?.pathname || '/'
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -32,12 +36,14 @@ const Signup = () => {
         console.log(data.data.display_url);
         createUser(email, password)
           .then((res) => {
+            setAuthToken(res.user)
             // console.log(res)
             updateUserProfile(name, data.data.display_url)
             .then(
               verifyEmail()
               .then(()=>{
                 toast.success('Please check your email for verification link')
+                navigate(from,{replace:true})
               })
             )
             .catch((err) => console.log(err));
@@ -54,6 +60,9 @@ const Signup = () => {
     signInWithGoogle()
     .then(result=>{
       console.log(result.user);
+      setAuthToken(result.user)
+      navigate(from,{replace:true})
+
     })
   }
 
@@ -133,7 +142,7 @@ const Signup = () => {
                 type="submit"
                 classes="w-full px-8 py-3 font-semibold rounded-md bg-gray-900 hover:bg-gray-700 hover:text-white text-gray-100"
               >
-                Sign up
+                {loading? <SmallSpinner/> : 'Sign up'}
               </PrimaryButton>
             </div>
           </div>
