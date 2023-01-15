@@ -8,9 +8,12 @@ import Main from '../Layout/Main'
 import ComingSoon from '../Pages/Shared/ComingSoon'
 import Details from '../Pages/Details'
 import SearchResult from '../Pages/SearchResult'
-import CheckoutCart from '../Components/CheckoutCart'
 import PrivateRoute from './PrivateRoute'
 import Checkout from '../Pages/Checkout'
+import Dashboard from '../Layout/Dashboard'
+import Welcome from '../Pages/Dashboard/Welcome'
+import MyBookings from '../Pages/Dashboard/MyBookings'
+import BecomeAHost from '../Pages/Dashboard/BecomeAHost'
 
 const router = createBrowserRouter([
   {
@@ -45,13 +48,28 @@ const router = createBrowserRouter([
       {
         path: '/checkout',
         element: <PrivateRoute><Checkout/></PrivateRoute>
+      }, 
+    ], 
+  },
+  {
+    path:'/dashboard',
+    element: <PrivateRoute><Dashboard/></PrivateRoute>,
+    children:[
+      {
+        path:'',
+        element: <Welcome/>
       },
       {
-        path: '/Dashboard',
-        element: <PrivateRoute></PrivateRoute>
+        path:'my-bookings',
+        element: <PrivateRoute><MyBookings/></PrivateRoute>,
       },
-    ],
-  },
+      {
+        path:'become-host',
+        element: <PrivateRoute><BecomeAHost/></PrivateRoute>
+      },
+    ]
+  }
+  
 ])
 
 export default router

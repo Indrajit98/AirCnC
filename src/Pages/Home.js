@@ -8,7 +8,7 @@ import SearchForm from "../Components/Form/SearchForm";
 import Spinner from "../Components/Spinner/Spinner";
 const Home = () => {
   const [loading, setLoading] = useState(false);
-  const [allExp, setAllExp] = useState([]);
+  const [allExp, setAllExp] = useState([]);  
   console.log(allExp);
 
   useEffect(() => {

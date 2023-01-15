@@ -4,6 +4,10 @@ import { Tab } from '@headlessui/react'
 import { AuthContext } from '../contexts/AuthProvider';
 import ReviewHouse from '../Components/ReviewHouse';
 import CheckoutCart from '../Components/CheckoutCart';
+import WhosComing from '../Components/WhosComing';
+import Payment from '../Components/Payment';
+import { saveBooking } from '../api/bookings';
+import toast from 'react-hot-toast'
 
 // import toast from 'react-hot-toast'
 
@@ -29,8 +33,29 @@ const Checkout = () => {
     ratings: 4.8,
     reviews: 64,
   }
+  const [bookingData, setBookingData] = useState({
+    homeId: homeData._id,
+    hostEmail: homeData?.host?.email,
+    message: '',
+    totalPrice: parseFloat(homeData.price) + 31,
+    guestEmail: user?.email,
 
+  })
   const [selectedIndex, setSelectedIndex] = useState(0)
+
+  const handleBooking = () => {
+    // console.log(bookingData)
+    saveBooking(bookingData)
+    // .then(res => res.json())
+    .then(data => {
+      console.log(data)
+      toast.success('Booking Successfully')
+    })
+    .catch(err => {
+      toast.error(err.message)
+    })
+    
+  }
   
 
   return (
@@ -109,16 +134,18 @@ const Checkout = () => {
             </Tab.Panel>
             <Tab.Panel>
               {/* WhosComing Comp */}
-              {/* <WhosComing
+              <WhosComing
                 setSelectedIndex={setSelectedIndex}
                 host={homeData?.host}
                 bookingData={bookingData}
                 setBookingData={setBookingData}
-              /> */}
+                
+              /> 
             </Tab.Panel>
             <Tab.Panel>
               {/* Payment Comp */}
-              {/* <Payment handleBooking={handleBooking} /> */}
+              <Payment  handleBooking = {handleBooking}/>
+  
              
             </Tab.Panel>
           </Tab.Panels>
