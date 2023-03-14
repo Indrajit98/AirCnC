@@ -1,16 +1,22 @@
 import React, { useContext, useState } from 'react'
-import AddServiceForm from '../Components/Form/AddServiceForm'
-import { AuthContext } from '../contexts/AuthProvider'
+import AddServiceForm from '../../Components/Form/AddServiceForm'
+import { AuthContext } from '../../contexts/AuthProvider'
 import { format } from 'date-fns'
-import { getImageUrl } from '../api/imageUpload'
-import { addHome } from '../api/services'
+import { getImageUrl } from '../../api/imageUpload'
+import { addHome } from '../../api/services'
+import { toast } from 'react-hot-toast'
+import { useNavigate } from 'react-router-dom'
 
 const AddHome = () => {
+
   const {user} = useContext(AuthContext)
+  const [loading,setLoading] = useState(false)
+  
   const [arrivalDate, setArrivalDate] = useState(new Date())
   const [departureDate, setDepartureDate] = useState(
     new Date(arrivalDate.getTime() + 24 * 60 * 60 * 1000)     
   )
+  const navigate = useNavigate()
 
   const handleSubmit = event => {
     event.preventDefault()
@@ -24,6 +30,7 @@ const AddHome = () => {
     const bathrooms = event.target.bathrooms.value
     const description = event.target.description.value
     const image = event.target.image.files[0]
+    setLoading(true)
     getImageUrl(image)
       .then(data => {
         const homeData = {
@@ -47,9 +54,14 @@ const AddHome = () => {
 
         addHome(homeData).then(data => {
           console.log(data)
+          setLoading(false)
+          toast.success('Home Added ')
+          navigate('/dashboard/manage-homes')
+
         })
       })
       .catch(err => console.log(err))
+      setLoading(false)
   }
  
 
@@ -64,6 +76,7 @@ const AddHome = () => {
       setArrivalDate={setArrivalDate}
       departureDate={departureDate}
       setDepartureDate={setDepartureDate}
+      loading={loading}
       
       />
     </>

@@ -1,8 +1,9 @@
 import { CalendarIcon } from '@heroicons/react/20/solid'
 import React from 'react'
 import DatePicker from 'react-datepicker'
+import SmallSpinner from '../Spinner/SmallSpinner'
 
-const AddServiceForm = ({handleSubmit,arrivalDate,setArrivalDate,departureDate,setDepartureDate}) => {
+const AddServiceForm = ({handleSubmit,arrivalDate,setArrivalDate,departureDate,setDepartureDate,loading}) => {
   return (
     <>
       <div className='flex justify-center mt-6'>
@@ -145,7 +146,7 @@ const AddServiceForm = ({handleSubmit,arrivalDate,setArrivalDate,departureDate,s
               type='submit'
               className='block w-full p-3 text-center font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-gradient-to-r from-emerald-500 to-lime-500 hover:bg-gray-200 hover:text-gray-700 focus:shadow-outline focus:outline-none'
             >
-              Save & Continue
+              {loading? <SmallSpinner/> : 'Save & Continue'}
             </button>
           </form>
         </div>
