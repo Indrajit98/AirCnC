@@ -42,8 +42,9 @@ const router = createBrowserRouter([
         element: <ComingSoon/>
       },
       {
-        path: '/service-details',
-        element: <Details/>
+        path: '/service-details/:id',
+        element: <Details/>,
+        loader:({params})=>fetch(`${process.env.REACT_APP_API_URL}/home/${params.id}`)
       },
       {
         path: '/search-result',

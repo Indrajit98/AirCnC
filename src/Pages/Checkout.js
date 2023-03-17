@@ -8,11 +8,14 @@ import WhosComing from '../Components/WhosComing';
 import Payment from '../Components/Payment';
 import { saveBooking } from '../api/bookings';
 import toast from 'react-hot-toast'
+import { useLocation } from 'react-router-dom';
 
 // import toast from 'react-hot-toast'
 
 const Checkout = () => {
     const { user } = useContext(AuthContext) 
+    const {state: checkoutData} = useLocation()
+    console.log(checkoutData);
 
   const homeData = {
     _id: '60ehjhedhjdj3434',
@@ -33,6 +36,7 @@ const Checkout = () => {
     ratings: 4.8,
     reviews: 64,
   }
+  
   const [bookingData, setBookingData] = useState({
     homeId: homeData._id,
     hostEmail: homeData?.host?.email,

@@ -8,7 +8,7 @@ const HomeCard = ({home}) => {
   return (
     <div className='lg:w-1/3 md:w-1/2 p-4 w-full'>
       <Link
-        to={`/service-details`}
+        to={`/service-details/${home?._id}`}
         className='block relative h-48 rounded overflow-hidden'
       >
         <img
@@ -24,7 +24,7 @@ const HomeCard = ({home}) => {
         <h2 className='text-gray-900 title-font text-lg font-medium'>
           {/* Huge Apartment with 4 bedrooms */}
           {/* {`${home?.description.slice(0,35)} ${home?.bedrooms} bedrooms `} */}
-          {`${home?.description.length >=40 ? home?.description.slice(0,60) : home?.description }`}
+          {`${home?.description.length >=40 ? home?.description.slice(0,60) + "..." : home?.description }`}
         </h2>
         <p className='mt-1'>${home?.total_guest} per person</p>
         <div className='flex mt-1'>
