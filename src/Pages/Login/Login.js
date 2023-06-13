@@ -22,7 +22,7 @@ const Login = () => {
     .then(res => {
       toast.success('Login Successfully.....')
       setAuthToken(res.user)
-
+      setLoading(false)
       navigate(from,{replace:true})
       // console.log(res)
     })

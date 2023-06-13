@@ -13,6 +13,21 @@ export const saveBooking = async (bookingData) =>{
 
 }
 
+export const getBookings = async email => {
+    const response = await fetch(
+      `${process.env.REACT_APP_API_URL}/bookings?email=${email}`,
+    //   {
+    //     method: 'GET',
+    //     headers: {
+    //       'content-type': 'application/json',
+    //       authorization: `Bearer ${localStorage.getItem('aircnc-token')}`,
+    //     },
+    //   }
+    )
+    const bookings = await response.json()
+    return bookings
+  }
+
 // Get all bookings for user
 export const getAllBookingsByEmail = async (email) =>{
     const url = `${process.env.REACT_APP_API_URL}/bookings?email=${email}`

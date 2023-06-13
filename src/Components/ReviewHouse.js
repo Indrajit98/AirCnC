@@ -6,8 +6,13 @@ import {
   NoSymbolIcon,
   UserGroupIcon,
 } from '@heroicons/react/24/solid'
+import { format  } from 'date-fns'
 
-const ReviewHouse = ({ setSelectedIndex }) => {
+const ReviewHouse = ({ setSelectedIndex,homeData}) => {
+  const from = format (new Date(homeData?.from), 'PP').split(',')[0].split(' ')[0];
+  console.log(from);
+  console.log(homeData);
+
   return (
     <>
       <h1 className='text-gray-900 title-font text-4xl font-medium'>
@@ -15,32 +20,32 @@ const ReviewHouse = ({ setSelectedIndex }) => {
       </h1>
       <br />
       <h3 className='text-gray-900 title-font text-xl font-medium'>
-        3 nights in Dhaka
+        {homeData?.totalNight} nights in {homeData?.location}
       </h3>
       <div className='flex flex-wrap gap-10 mt-4'>
         <div className='flex justify-between gap-2'>
           <div className='text-sm px-3 py-1 bg-gray-200 text-center'>
-            <p>APR</p>
-            <p>13</p>
+            <p>{format (new Date(homeData?.from), 'PP').split(',')[0].split(' ')[0]}</p>
+            <p>{format (new Date(homeData?.from), 'PP').split(',')[0].split(' ')[1]}</p>
           </div>
           <div>
-            <p>Monday check-in</p>
+            <p>{format (new Date(homeData?.from), 'cccc')} check-in</p>
             <p>After 12:00 PM</p>
           </div>
         </div>
         <div className='flex justify-between'>
           <div className='flex justify-between gap-2'>
             <div className='text-sm px-3 py-1 bg-gray-200 text-center'>
-              <p>APR</p>
-              <p>13</p>
+            <p>{format (new Date(homeData?.to), 'PP').split(',')[0].split(' ')[0]}</p>
+            <p>{format (new Date(homeData?.to), 'PP').split(',')[0].split(' ')[1]}</p>
             </div>
             <div>
-              <p>Monday check-in</p>
+              <p>{format (new Date(homeData?.to), 'cccc')} check-in</p>
               <p>After 12:00 PM</p>
             </div>
           </div>
         </div>
-      </div>
+      </div> 
       <p className='my-8 text-gray-500'>Self check-in with building staff</p>
       <hr />
       <p className='text-xl font-bold my-4'>Things to keep in mind</p>

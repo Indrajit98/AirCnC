@@ -38,10 +38,17 @@ const Checkout = () => {
   }
   
   const [bookingData, setBookingData] = useState({
-    homeId: homeData._id,
-    hostEmail: homeData?.host?.email,
-    message: '',
-    totalPrice: parseFloat(homeData.price) + 31,
+    home: {
+      id: checkoutData?.homeData?._id,
+      image: checkoutData?.homeData?.image,
+      title: checkoutData?.homeData?.title,
+      location: checkoutData?.homeData?.location,
+      from: checkoutData?.homeData?.from,
+      to: checkoutData?.homeData?.to,
+    },
+    hostEmail: checkoutData?.homeData?.host?.email,
+    comment: '',
+    price: parseFloat(checkoutData?.totalPrice),
     guestEmail: user?.email,
 
   })
@@ -134,13 +141,13 @@ const Checkout = () => {
           </Tab.List>
           <Tab.Panels>
             <Tab.Panel>
-              <ReviewHouse setSelectedIndex={setSelectedIndex} />
+              <ReviewHouse setSelectedIndex={setSelectedIndex} homeData={{...checkoutData?.homeData , totalNight: checkoutData?.totalNights }} />
             </Tab.Panel>
             <Tab.Panel>
               {/* WhosComing Comp */}
               <WhosComing
                 setSelectedIndex={setSelectedIndex}
-                host={homeData?.host}
+                host={checkoutData?.homeData?.host}
                 bookingData={bookingData}
                 setBookingData={setBookingData}
                 

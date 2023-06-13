@@ -29,7 +29,7 @@ const Signup = () => {
 
     fetch(url, {
       method: "POST",
-      body: formData,
+      body: formData, 
     })
       .then((res) => res.json())
       .then((data) => {
@@ -43,6 +43,7 @@ const Signup = () => {
               verifyEmail()
               .then(()=>{
                 toast.success('Please check your email for verification link')
+                setLoading(false)
                 navigate(from,{replace:true})
               })
             )
@@ -61,6 +62,7 @@ const Signup = () => {
     .then(result=>{
       console.log(result.user);
       setAuthToken(result.user)
+      setLoading(false)
       navigate(from,{replace:true})
 
     })
