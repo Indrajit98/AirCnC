@@ -15,11 +15,11 @@ const TableRow = ({ booking, fetchBookings }) => {
   }
   const modalHandler = id => {
     console.log(id)
-    // deleteBooking(id).then(data => {
-    //   console.log(data)
-    //   fetchBookings()
-    //   toast.success('Booking Canceled')
-    // })
+    deleteBooking(id).then(data => {
+      console.log(data)
+      fetchBookings()
+      toast.success('Booking Canceled')
+    })
     closeModal()
   }
   console.log(booking)

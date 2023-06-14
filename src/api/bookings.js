@@ -27,6 +27,24 @@ export const getBookings = async email => {
     const bookings = await response.json()
     return bookings
   }
+  // Delete a booking 
+
+  export const deleteBooking = async (id) => {
+
+    const url = `${process.env.REACT_APP_API_URL}/booking/${id}`
+    const response = await fetch(url,{
+       method: "DELETE",
+       headers: {
+           'content-type': 'application/json',
+       }
+    });
+    const data= await response.json();
+    return data;
+
+  }
+
+
+
 
 // Get all bookings for user
 export const getAllBookingsByEmail = async (email) =>{
