@@ -1,3 +1,4 @@
+import { json } from "react-router-dom";
 
 export const saveBooking = async (bookingData) =>{
      const url = `${process.env.REACT_APP_API_URL}/bookings`
@@ -42,7 +43,22 @@ export const getBookings = async email => {
     return data;
 
   }
+// Create payment intent 
+export const getPaymentIntent = async price => {
+  // const url = `${process.env.REACT_APP_API_URL}/create-payment-intent`
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/create-payment-intent`,
+    {
+       method: "POST",
+       headers: {
+           'content-type': 'application/json',
+       },
+      //  body: JSON.stringify({ price })
+      body: JSON.stringify({price})
+    });
+    const data= await response.json();
+    return data;
 
+}
 
 
 
