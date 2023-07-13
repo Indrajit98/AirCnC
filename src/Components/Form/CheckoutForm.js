@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
 // import { saveBooking } from '../../api/auth'
 import toast from 'react-hot-toast'
-import { useNavigate } from 'react-router-dom'
+// import { useNavigate } from 'react-router-dom'
 import { getPaymentIntent, saveBooking } from '../../api/bookings'
+import { useNavigate } from 'react-router-dom'
 
 const CheckoutForm = ({ bookingData }) => {
+  // const navigate = useNavigate()
   const navigate = useNavigate()
   const stripe = useStripe()
   const elements = useElements()
@@ -71,14 +73,14 @@ const CheckoutForm = ({ bookingData }) => {
         ...bookingData,
       }
       saveBooking(data)
-        .then(res => res.json())
+        // .then(res => res.json())
         .then(data => {
           setProcessing(false)
           console.log(data)
           toast.success('Booking Successful!')
-          navigate('/dashboard/my-bookings')
-        })
-        .catch(err => console.log(err))
+          navigate('/dashboard/my-bookings')  
+        }) 
+        // .catch(err => console.log(err))
     }
   }
   return (
