@@ -73,7 +73,6 @@ const CheckoutForm = ({ bookingData }) => {
         ...bookingData,
       }
       saveBooking(data)
-        // .then(res => res.json())
         .then(data => {
           setProcessing(false)
           console.log(data)

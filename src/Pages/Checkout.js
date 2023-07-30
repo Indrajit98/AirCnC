@@ -44,6 +44,7 @@ const Checkout = () => {
       id: checkoutData?.homeData?._id,
       image: checkoutData?.homeData?.image,
       title: checkoutData?.homeData?.title,
+      description:checkoutData?.homeData?.description,
       location: checkoutData?.homeData?.location,
       from: checkoutData?.homeData?.from,
       to: checkoutData?.homeData?.to,

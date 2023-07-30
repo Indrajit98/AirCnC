@@ -14,6 +14,7 @@ import Dashboard from '../Layout/Dashboard'
 import Welcome from '../Pages/Dashboard/Welcome'
 import MyBookings from '../Pages/Dashboard/MyBookings'
 import BecomeAHost from '../Pages/Dashboard/BecomeAHost'
+import ManageHomes from '../Pages/Dashboard/ManageHomes'
 import AllUsers from '../Pages/Dashboard/AllUsers'
 import AllBookings from '../Pages/Dashboard/AllBookings'
 import AddHome from '../Pages/Dashboard/AddHome'
@@ -88,6 +89,10 @@ const router = createBrowserRouter([
         path:'add-home',
         element: <PrivateRoute><AddHome/></PrivateRoute>
       },
+      {
+        path:'manage-homes',
+        element:<PrivateRoute> <ManageHomes></ManageHomes> </PrivateRoute>
+      }
     ]
   }
   

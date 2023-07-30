@@ -14,7 +14,7 @@ import {
         <div className='flex justify-between'>
           <div>
             <h2 className='text-gray-900 title-font text-lg font-medium'>
-              {homeData.title}
+              {homeData.description}
             </h2>
             <br />
             <h3 className='text-gray-400 text-xs tracking-widest title-font mb-1 mt-1'>
