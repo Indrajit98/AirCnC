@@ -5,6 +5,8 @@ export const addHome = async (homeData) =>{
        method: "POST",
        headers: {
            'content-type': 'application/json',
+          authorization: `Bearer ${localStorage.getItem('aircnc-token')}`,
+
        },
        body: JSON.stringify(homeData)
     });
@@ -29,7 +31,7 @@ export const getHomes = async email => {
         method: 'GET',
         headers: {
           'content-type': 'application/json',
-        //   authorization: `Bearer ${localStorage.getItem('aircnc-token')}`,
+          authorization: `Bearer ${localStorage.getItem('aircnc-token')}`,
         },
       }
     )
@@ -57,10 +59,18 @@ export const updateHome = async homeData => {
       method: 'DELETE',
       headers: {
         'content-type': 'application/json',
-        // authorization: `Bearer ${localStorage.getItem('aircnc-token')}`,
+        authorization: `Bearer ${localStorage.getItem('aircnc-token')}`,
       },
     })
     const result = await response.json()
     return result
   }
 
+// Search Result
+export const getSearchResult = async (location, from, to, total_guest) => {
+  const response = await fetch(
+    `${process.env.REACT_APP_API_URL}/search-result?location=${location}&from=${from}&to=${to}&total_guest=${total_guest}`
+  )
+  const data = await response.json()
+  return data
+}
